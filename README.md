@@ -5,7 +5,6 @@ Introducing AVIF.swift, the ultimate image decoding solution for AVIF images on 
 
 This package is provides full (compatibility support) for AVIF images for all apple platforms. Supports encode AVIF and decode AVIF images in convinient and fast way
 
-A package to display AVIF on iOS, MacOS, Catalyst, WatchOS, tvOS or encode AVIF images. Also provider AVIF support for Nuke. Have support for older versions of iOS, WatchOS, MacOSX, tvOS, Catalyst and all the simulators that doesn't have support for AVIF images
 
 Package based on `dav1d` to have the best speed of decompressing on devices that do not have support for AV1 hardware codec.
 As AVIF encoder have `aom` as just this one looks reasonable to encode AVIF images on mobile devices
@@ -49,65 +48,6 @@ animatedEncoder.create()
 try animatedEncoder.addImage(UIImage(), duration: 250)
 let encodedData = animatedEncoder.encode()
 ```
-
-## Nuke Plugin
-
-If you wish to use `AVIF` with <a href="https://github.com/kean/Nuke" target="_blank">`Nuke`</a> you may add `avifnuke` library to project and activate the plugin on app init
-
-```swift
-import avifnuke
-
-AVIFNukePlugin.enable()
-
-let imageView = UIImageView()
-let avifimageURL = URL(string: "https://bestavifdomain.com/sample.avif")!
-Nuke.loadImage(with: url, into: imageView)
-```
-
-## SDWebImage Plugin
-If you wish to use `AVIF`  with <a href="https://github.com/SDWebImage/SDWebImage" target="_blank">`SDWebImage`</a> you may use provided plugin
-
-```swift
-import SDWebImage
-#if canImport(avif)
-import avif
-#endif
-
-public class SDWebImageAVIFCoder: NSObject, SDImageCoder {
-    public func canDecode(from data: Data?) -> Bool {
-        guard let data else { return false }
-        return data.isAVIFFormat
-    }
-
-    public func decodedImage(with data: Data?, options: [SDImageCoderOption : Any]? = nil) -> UIImage? {
-        guard let data else {
-            return nil
-        }
-        return AVIFDecoder.decode(data)
-    }
-
-    public func canEncode(to format: SDImageFormat) -> Bool {
-        return true
-    }
-
-    public func encodedData(with image: UIImage?, format: SDImageFormat, options: [SDImageCoderOption : Any]? = nil) -> Data? {
-        guard let image else {
-            return nil
-        }
-        return try? AVIFEncoder.encode(image: image, quality: 50)
-    }
-
-    public override init() {
-    }
-}
-```
-
-And after register the plugin
-```swift
-SDImageCodersManager.shared.addCoder(SDWebImageAVIFCoder())
-```
-
-Currently, avif nuke and SDWebImage plugin do not support animated avifs so you have to do it yourself
 
 ## Disclaimer
 

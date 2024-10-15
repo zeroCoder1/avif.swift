@@ -9,23 +9,16 @@ let package = Package(
     products: [
         .library(
             name: "avif",
-            targets: ["avif"]),
-        .library(
-            name: "avifnuke",
-            targets: ["avifnuke"]),
+            targets: ["avif"])
     ],
     dependencies: [
         .package(url: "https://github.com/awxkee/libaom.swift.git", "1.0.0"..<"1.1.0"),
         .package(url: "https://github.com/awxkee/libdav1d.swift.git", "1.1.0"..<"1.2.0"),
         .package(url: "https://github.com/awxkee/libyuv.swift.git", "1.0.0"..<"1.1.0"),
         .package(url: "https://github.com/awxkee/libwebp-ios.git", "1.1.0"..<"1.2.0"),
-        .package(url: "https://github.com/kean/Nuke.git", "12.0.0"..<"13.0.0"),
         .package(url: "https://github.com/awxkee/libsvtav1enc.swift", "1.0.0"..<"1.1.0")
     ],
     targets: [
-        .target(
-            name: "avifnuke",
-            dependencies: ["avif", .product(name: "Nuke", package: "Nuke"), "avifc"]),
         .target(
             name: "avif",
             dependencies: ["avifc"]),
